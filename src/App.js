@@ -5,13 +5,17 @@ import Footer from './Components/footer';
 import { GifStore } from './GifStore';
 import FavouritePage from './Components/favouritePage';
 import { Typography, Button, Grid } from '@material-ui/core';
-const gifStore = new GifStore();
-// const styles = {
-//   title: {
-//     fontFamily: 'Open Sans',
+import { withStyles } from '@material-ui/core';
 
-//   }
-// }
+const gifStore = new GifStore();
+const styles = {
+  activeButton: {
+    "&:active": {
+      backgroundColor: "red"
+    }
+  }
+}
+
 //Note to self: See if u can fix the number of favourites issue before u submit
 class App extends Component {
   constructor(props) {
@@ -19,7 +23,9 @@ class App extends Component {
     this.state = {
       isSearchState: true,
       isFavouriteState: false,
-      numberOfFavourites: 0
+      numberOfFavourites: 0,
+      fontWeightForFavourites: '400', //400, 600 or 700
+      fontWeightForSearch: '600'
     }
   }
 
@@ -31,18 +37,28 @@ class App extends Component {
     this.setState({
       ...this.state,
       isSearchState: !this.state.isSearchState,
-      isFavouriteState: !this.state.isFavouriteState
+      isFavouriteState: !this.state.isFavouriteState,
     })
+
+    if(!this.state.isSearchState && this.state.isFavouriteState){
+      this.setState({
+        fontWeightForFavourites: '400',
+        fontWeightForSearch: '600'
+      })
+    } else {
+      this.setState({
+        fontWeightForSearch: '400',
+        fontWeightForFavourites: '600',
+      })
+    }
   }
 
-  //Note: Come back to bolding the page?
   renderFavouritesButton = () => {
     const { numberOfFavourites } = this.state;
-
     return (
       <React.Fragment>
         <Button onClick={this.triggerFavouriteState}>
-          <Typography>Favourites ({numberOfFavourites})</Typography>
+          <Typography style={{ fontWeight: this.state.fontWeightForFavourites }}>Favourites ({numberOfFavourites})</Typography>
         </Button>
       </React.Fragment>
     )
@@ -52,7 +68,7 @@ class App extends Component {
     return (
       <React.Fragment>
         <Button onClick={this.triggerFavouriteState}>
-          <Typography>Search</Typography>
+          <Typography style={{ fontWeight: this.state.fontWeightForSearch }} variant="subtitle1">Search</Typography>
         </Button>
       </React.Fragment>
     )
@@ -64,11 +80,11 @@ class App extends Component {
         <Grid container>
           <Grid item xs={12}>
             <div style={{ float: 'left', paddingLeft: '2%' }}>
-              <Typography style={{fontFamily: 'Open Sans'}}>Galler<strong>easy</strong> | {this.renderSearchButton()} {this.renderFavouritesButton()}</Typography>
+              <Typography style={{ fontFamily: 'Open Sans' }}>Galler<strong>easy</strong> | {this.renderSearchButton()} {this.renderFavouritesButton()}</Typography>
             </div>
           </Grid>
-          <Grid item style={{width: '95%'}}>
-            <hr style={{textAlign: 'center'}}></hr>
+          <Grid item style={{ width: '100%' }}>
+            <hr></hr>
           </Grid>
           <Grid item xs={12}>
             {/* <Header gifStore={gifStore} triggerFavouriteState={this.triggerFavouriteState} /> */}
@@ -87,4 +103,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withStyles(styles)(App);

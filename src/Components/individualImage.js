@@ -82,11 +82,11 @@ class ImagesGrid extends Component {
                 <Grid
                     className="wrapper"
                     item
-                    md={3} sm={3} lg={3} xl={3} xs={12} key={image.id}>
+                    md={4} sm={6} lg={3} xl={3} xs={12} key={image.id}>
                     <div class="box" onClick={() => this.favouriteImg(image)}>
                         <img
                             src={image.images.fixed_height_still.url}
-                            width={250} height={250} style={{ objectFit: 'cover', cursor: 'pointer' }} />
+                            width={300} height={300} style={{ objectFit: 'cover', cursor: 'pointer', width: '90%', margin: '0 auto' }} />
                         {favourite ? this.renderFavouriteOverlay() : this.renderUnfavouriteOverlay()}
                     </div>
                 </Grid>
