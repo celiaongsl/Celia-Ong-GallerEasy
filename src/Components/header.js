@@ -1,33 +1,34 @@
 import React, { Component } from 'react';
 import { Typography, Button } from '@material-ui/core';
-import FavouritePage from './favouritePage';
 
 class Header extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             numberOfFavourites: 0
         }
     }
 
+    componentDidUpdate() {
+        console.log("onclick doesnt change this much does it")
+        const { gifStore } = this.props;
+        const { getNumberOfFavourites } = gifStore;
+        //If the state of numberoffavourites != props of getNumberOfFavourites...??
+        if (this.state.numberOfFavourites !== getNumberOfFavourites) {
+            console.log("why r u not going in")
+            this.setState({
+                numberOfFavourites: getNumberOfFavourites
+            })
+        }
+    }
+
     renderFavouritesButton = () => {
-        // const { gifStore } = this.props
-        // var number
-        // if(gifStore.getFavouriteGifs){
-        //     number = gifStore.getFavouriteGifs.length()
-        // } else {
-        //     number = 0
-        // }
-        // let number = gifStore.getFavouriteGifs.length !== 0 ? gifStore.getFavouriteGifs.length() : 0
-        // let number = 0
-        // const { gifStore } = this.props;
-        // const { getFavouriteGifs } = gifStore
-        // if(getFavouriteGifs.length !== 0){
-        //     console.log("does this update itself constantly??")
-        //     this.setState({
-        //         numberOfFavourites: getFavouriteGifs.length
-        //     })
-        // }
+        const { gifStore } = this.props;
+        const { getNumberOfFavourites } = gifStore;
+        console.log(getNumberOfFavourites)
+        console.log("does this get updated now??")
+        // console.log(getFavouriteGifs.length)
+        // console.log('does this get updated and sent here??')
         const { numberOfFavourites } = this.state;
         return (
             <React.Fragment>

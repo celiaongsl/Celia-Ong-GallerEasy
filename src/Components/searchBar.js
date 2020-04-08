@@ -15,7 +15,7 @@ class SearchBar extends Component {
         }
     }
 
-    giphySearch = (keyword) => { //should i list everything?
+    giphySearch = (keyword) => {
         const { gifStore } = this.props;
         axios.get(`https://api.giphy.com/v1/gifs/search?api_key=S7w5A9kEnFM0y2yTqekF0juPUqTK2H1w&q=${keyword}&limit=8`)
             .then((res) => {

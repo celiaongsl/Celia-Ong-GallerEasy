@@ -3,6 +3,7 @@ import { decorate, observable, action, computed } from "mobx";
 class GifStore {
     gifs = '';
     favouritedGifs = []; //send in entire objects
+    numberOfFavourites = 0;
 
     setGifs = (allGifs) => {
         this.gifs = allGifs;
@@ -29,6 +30,10 @@ class GifStore {
         }
     }
 
+    countNumberOfFavourites = () => {
+        this.numberOfFavourites = this.favouritedGifs.length
+    }
+
     get getGifs() {
         return this.gifs
     }
@@ -36,16 +41,23 @@ class GifStore {
     get getFavouriteGifs() {
         return this.favouritedGifs;
     }
+
+    get getNumberOfFavourites(){
+        return this.numberOfFavourites
+    }
 }
 
 
 GifStore = decorate(GifStore, {
     gifs: observable,
     favouritedGifs: observable,
+    numberOfFavourites: observable,
     setGifs: action,
     setFavouriteGifs: action,
+    countNumberOfFavourites: action,
     getGifs: computed,
-    getFavouriteGifs: computed
+    getFavouriteGifs: computed,
+    getNumberOfFavourites: computed,
 });
 
 export { GifStore };

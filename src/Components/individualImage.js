@@ -19,12 +19,12 @@ class ImagesGrid extends Component {
             opacity: 1,
             listOfFavouriteGifs: [],
             favourite: false,
-            color: 'black'
+            numberOfFavourites: 0
         }
     }
 
     componentDidMount() {
-        //prolly have to set favourite from the store (if there are favourites)
+        //Set favourite from the store (if there are favourites)
         const { gifStore, image } = this.props;
         const { getFavouriteGifs } = gifStore
         if (getFavouriteGifs.length !== 0) {
@@ -40,11 +40,23 @@ class ImagesGrid extends Component {
 
     favouriteImg = (e) => {
         const { gifStore } = this.props;
-        const { setFavouriteGifs } = gifStore;
+        const { setFavouriteGifs, countNumberOfFavourites } = gifStore;
         setFavouriteGifs(e)
+        countNumberOfFavourites()
         this.setState({
             favourite: !this.state.favourite,
         })
+        // if(this.state.favourite === true){ //if state is false AFTER it gets set (but...) then --?
+        //     console.log("subtract 1")
+        //     this.setState({
+        //         numberOfFavourites: this.state.numberOfFavourites--
+        //     })
+        // } else {
+        //     console.log("add 1")
+        //     this.setState({
+        //         numberOfFavourites: this.state.numberOfFavourites++
+        //     })
+        // }
     }
 
     renderUnfavouriteOverlay = () => {
