@@ -1,1 +1,0 @@
-const GIPHY_KEY = 'S7w5A9kEnFM0y2yTqekF0juPUqTK2H1w';

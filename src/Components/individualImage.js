@@ -34,29 +34,19 @@ class ImagesGrid extends Component {
                         favourite: true
                     })
                 }
+                return null
             })
         }
     }
 
     favouriteImg = (e) => {
-        const { gifStore } = this.props;
-        const { setFavouriteGifs, countNumberOfFavourites } = gifStore;
+        const { gifStore, updateNumberOfFavourites } = this.props;
+        const { setFavouriteGifs } = gifStore;
         setFavouriteGifs(e)
-        countNumberOfFavourites()
+        updateNumberOfFavourites(e)
         this.setState({
             favourite: !this.state.favourite,
         })
-        // if(this.state.favourite === true){ //if state is false AFTER it gets set (but...) then --?
-        //     console.log("subtract 1")
-        //     this.setState({
-        //         numberOfFavourites: this.state.numberOfFavourites--
-        //     })
-        // } else {
-        //     console.log("add 1")
-        //     this.setState({
-        //         numberOfFavourites: this.state.numberOfFavourites++
-        //     })
-        // }
     }
 
     renderUnfavouriteOverlay = () => {
@@ -74,6 +64,7 @@ class ImagesGrid extends Component {
             </div>
         )
     }
+
     render() {
         const { image } = this.props;
         const { favourite } = this.state;
@@ -85,6 +76,7 @@ class ImagesGrid extends Component {
                     md={4} sm={6} lg={3} xl={3} xs={12} key={image.id}>
                     <div class="box" onClick={() => this.favouriteImg(image)}>
                         <img
+                            alt={image.title}
                             src={image.images.fixed_height_still.url}
                             width={300} height={300} style={{ objectFit: 'cover', cursor: 'pointer', width: '90%', margin: '0 auto' }} />
                         {favourite ? this.renderFavouriteOverlay() : this.renderUnfavouriteOverlay()}

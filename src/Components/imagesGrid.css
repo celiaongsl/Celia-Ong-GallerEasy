@@ -1,10 +1,8 @@
 
   .box {
-    /* width: 300px; */
     height: 300px;
     position: relative;
     cursor: pointer;
-    /* text-align: center; */
     margin-left: 1%;
   }
 

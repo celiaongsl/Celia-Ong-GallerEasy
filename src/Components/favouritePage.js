@@ -4,7 +4,7 @@ import { Typography, Grid } from '@material-ui/core'
 
 class FavouritePage extends Component {
     render() {
-        const { gifStore } = this.props
+        const { gifStore, updateNumberOfFavourites } = this.props
         const { getFavouriteGifs } = gifStore;
         //Issue: It unfavorites but doesn't remove on the spot
         if (getFavouriteGifs.length !== 0) {
@@ -15,7 +15,7 @@ class FavouritePage extends Component {
                             getFavouriteGifs.map((image, index) => {
                                 return (
                                     <React.Fragment key={index}>
-                                        <ImagesGrid image={image} gifStore={gifStore} />
+                                        <ImagesGrid image={image} gifStore={gifStore} updateNumberOfFavourites={updateNumberOfFavourites} />
                                     </React.Fragment>
                                 )
                             })

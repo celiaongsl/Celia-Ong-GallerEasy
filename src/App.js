@@ -5,18 +5,9 @@ import Footer from './Components/footer';
 import { GifStore } from './GifStore';
 import FavouritePage from './Components/favouritePage';
 import { Typography, Button, Grid } from '@material-ui/core';
-import { withStyles } from '@material-ui/core';
 
 const gifStore = new GifStore();
-const styles = {
-  activeButton: {
-    "&:active": {
-      backgroundColor: "red"
-    }
-  }
-}
 
-//Note to self: See if u can fix the number of favourites issue before u submit
 class App extends Component {
   constructor(props) {
     super(props)
@@ -29,8 +20,20 @@ class App extends Component {
     }
   }
 
-  updateNumberOfFavourites = () => {
-
+  updateNumberOfFavourites = (e) => {
+    const { getFavouriteGifs } = gifStore;
+    var favouritedGif = getFavouriteGifs.find((ele) => {
+      return ele.id === e.id
+    })
+    if (favouritedGif) {
+      this.setState({
+        numberOfFavourites: this.state.numberOfFavourites+1
+      })
+    } else {
+      this.setState({
+        numberOfFavourites: this.state.numberOfFavourites-1
+      })
+    }
   }
 
   triggerFavouriteState = () => {
@@ -40,7 +43,7 @@ class App extends Component {
       isFavouriteState: !this.state.isFavouriteState,
     })
 
-    if(!this.state.isSearchState && this.state.isFavouriteState){
+    if (!this.state.isSearchState && this.state.isFavouriteState) {
       this.setState({
         fontWeightForFavourites: '400',
         fontWeightForSearch: '600'
@@ -58,7 +61,9 @@ class App extends Component {
     return (
       <React.Fragment>
         <Button onClick={this.triggerFavouriteState}>
-          <Typography style={{ fontWeight: this.state.fontWeightForFavourites }}>Favourites ({numberOfFavourites})</Typography>
+          <Typography style={{ fontWeight: this.state.fontWeightForFavourites }}>
+            Favourites {`(${numberOfFavourites})`}
+          </Typography>
         </Button>
       </React.Fragment>
     )
@@ -87,13 +92,11 @@ class App extends Component {
             <hr></hr>
           </Grid>
           <Grid item xs={12}>
-            {/* <Header gifStore={gifStore} triggerFavouriteState={this.triggerFavouriteState} /> */}
             <div style={{ width: '100%', textAlign: 'center' }}>
-              {this.state.isSearchState && <SearchBar gifStore={gifStore} />}
-              {this.state.isFavouriteState && <FavouritePage gifStore={gifStore} />}
+              {this.state.isSearchState && <SearchBar gifStore={gifStore} updateNumberOfFavourites={this.updateNumberOfFavourites} />}
+              {this.state.isFavouriteState && <FavouritePage gifStore={gifStore} updateNumberOfFavourites={this.updateNumberOfFavourites} />}
             </div>
           </Grid>
-          {/* <ImagesGrid /> */}
           <Grid item xs={12}>
             <Footer />
           </Grid>
@@ -103,4 +106,4 @@ class App extends Component {
   }
 }
 
-export default withStyles(styles)(App);
+export default App;
