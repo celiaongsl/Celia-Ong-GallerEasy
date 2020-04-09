@@ -1,16 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, CircularProgress } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles'
 import './imagesGrid.css';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-
-const styles = {
-    tr: {
-        '&:hover': {
-            background: 'black'
-        }
-    }
-}
 
 class ImagesGrid extends Component {
     constructor(props) {
@@ -20,7 +11,6 @@ class ImagesGrid extends Component {
             listOfFavouriteGifs: [],
             favourite: false,
             numberOfFavourites: 0,
-            isLoaded: true,
         }
     }
 
@@ -72,30 +62,9 @@ class ImagesGrid extends Component {
         })
     }
 
-    renderImage = () => {
-        const { image } = this.props;
-        const { favourite } = this.state;
-        return(
-            <React.Fragment>
-                <Grid
-                    className="wrapper"
-                    item
-                    md={4} sm={6} lg={3} xl={3} xs={12} key={image.id}>
-                    <div class="box" onClick={() => this.favouriteImg(image)}>
-                        <img
-                            alt={image.title}
-                            src={image.images.fixed_height_still.url}
-                            onLoad={this.handleImageLoaded}
-                            width={300} height={300} style={{ objectFit: 'cover', cursor: 'pointer', width: '90%', margin: '0 auto' }} />
-                        {favourite ? this.renderFavouriteOverlay() : this.renderUnfavouriteOverlay()}
-                    </div>
-                </Grid>
-            </React.Fragment>
-        )
-    }
     render() {
         const { image } = this.props;
-        const { favourite, isLoaded } = this.state;
+        const { favourite } = this.state;
         const imgStyle = { objectFit: 'cover', cursor: 'pointer', width: '90%', margin: '0 auto' }
         return(
             <React.Fragment>
@@ -118,4 +87,4 @@ class ImagesGrid extends Component {
     }
 }
 
-export default withStyles(styles)(ImagesGrid);
+export default ImagesGrid;
