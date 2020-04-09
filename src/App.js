@@ -16,7 +16,7 @@ class App extends Component {
       isFavouriteState: false,
       numberOfFavourites: 0,
       fontWeightForFavourites: '400', //400, 600 or 700
-      fontWeightForSearch: '600'
+      fontWeightForSearch: '600',
     }
   }
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextField, Grid } from '@material-ui/core';
+import { TextField, Grid, CircularProgress } from '@material-ui/core';
 import axios from 'axios';
 import { observer } from 'mobx-react';
 import ImagesGrid from './individualImage'
@@ -12,19 +12,25 @@ class SearchBar extends Component {
             keyword: '',
             searchedGifs: '',
             showGif: false,
+            isLoaded: true
         }
     }
 
     giphySearch = (keyword) => {
         const { gifStore } = this.props;
+        this.setState({isLoaded: false, showGif: false})
         axios.get(`https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${keyword}&limit=8`)
             .then((res) => {
                 return res.data.data
             }).then((res) => {
                 gifStore.setGifs(res)
-                this.setState({
-                    showGif: true
-                })
+            }).then(() => {
+                if (gifStore.getGifs.length === 8) {
+                    this.setState({
+                        showGif: true,
+                        isLoaded: true
+                    })
+                }
             }).catch((err) => {
                 console.log(err)
             })
@@ -40,6 +46,12 @@ class SearchBar extends Component {
         this.setState({
             keyword: value
         })
+    }
+
+    isLoading = () => {
+        if(this.state.isLoaded === false) {
+            return <CircularProgress />
+        }
     }
 
     render() {
@@ -60,7 +72,7 @@ class SearchBar extends Component {
                                 </React.Fragment>
                             )
                         })}
-                    </Grid> : ""
+                    </Grid> : this.isLoading()
                 }
             </div>
         )
